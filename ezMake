@@ -1,0 +1,24 @@
+echo "\nBuilding ez-data-drilldown component...\n"
+echo "Note:  Please wait until build has finished -- canceling in the middle of the build could leave it in a weird state\n\n"
+rm -rf ./build-demo ./build-component
+
+# First, build the demo
+polymer build
+mv build build-demo
+
+
+# Now, build the Component
+mv polymer.json polymer.json.saved
+mv polymer.json.build-component polymer.json
+polymer build
+mv build build-component
+
+# move index.html into place for this component
+mv ./build-component/es6-bundled/demo/index.html.build-component ./build-component/es6-bundled/demo/index.html
+mv ./build-component/es6-bundled/tools/ez-data-drilldown-loader.js ./build-component/ 
+mv polymer.json polymer.json.build-component
+mv polymer.json.saved polymer.json
+
+rm -rf ./build
+
+echo "\n\nFinished!!!\n"

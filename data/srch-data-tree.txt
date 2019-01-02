@@ -1,0 +1,38 @@
+{
+    "success": true,
+    "payload": [
+  {
+"_id": "1",
+    "hasChildren": true,
+    "parentItem": null,
+    "age": "11",
+    "eyeColor": "green",
+    "name": "Boy Blue",
+    "gender": "Male"
+  },{
+"_id": "2",
+    "hasChildren": true,
+    "parentItem": null,
+    "age": "22",
+    "eyeColor": "Blue",
+    "name": "Jack Spratt",
+    "gender": "Male"
+  },{
+"_id": "3",
+"hasChildren": true,
+    "parentItem": null,
+    "age": "33",
+    "eyeColor": "Red",
+    "name": "Elmer Fudd",
+    "gender": "Male"
+  },{
+"_id": "4",
+    "hasChildren": true,
+    "parentItem": null,
+    "age": "44",
+    "eyeColor": "Purple",
+    "name": "Bugs",
+    "gender": "Male"
+  }
+  ]
+}

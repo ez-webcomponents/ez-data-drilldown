@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>ez-data-drilldown demo..</title>
+    <script type="module" src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script type="module" src="../src/components/ez-data-drilldown.js"></script>
+    <script type="module">
+      import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
+      import '@polymer/iron-demo-helpers/demo-snippet.js';
+      import '@polymer/paper-card/paper-card.js';
+    </script>
+
+
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
+  </head>
+  <body>
+    <div class="vertical-section-container">
+      <h1>Basic ez-data-drilldown demo -- with 'url'</h1>
+      <demo-snippet>
+        <template>         
+
+<!-- If using as a stand-alone-component:  use ez-data-drilldown-loader.js
+<script src="./node_modules/@sdl-web/ez-data-drilldown/build-component/ez-data-drilldown-loader.js"></script> -->
+
+<!-- If using in an existing build project:  use ez-data-drilldown.js directly-->
+<!-- <script type="import" src="@sdl-web/ez-data-drilldown/src/components/ez-data-drilldown.js"></script>  -->
+
+<!-- Now add ez-data-drilldown to html section -->
+
+<ez-data-drilldown name="combo1-data" id='combo1-data' url='./data/srch-data.txt' 
+    title="Company Revenue"
+    height="100%"  
+    width="100%"
+    maxcharts=2
+    groupby='[{"field": "company", "aggregate": "sum(revenue)", "chart": "pie"},
+              {"field": "division", "aggregate": "sum(division)", "chart": "bar"},
+              {"field": "gender", "aggregate": "count(gender)", "chart": "pie"},
+              {"field": "eyeColor", "aggregate": "count(eyeColor)", "chart": "bar"},
+              {"field": "age", "aggregate": "count(age)", "chart": "pie"}]'>  
+</ez-data-drilldown>
+
+<ez-data-drilldown name="combo1-data" id='combo1-data' url='./data/srch-data.txt' 
+    title="Division Demographics"
+    height="300px"  
+    width="350px"
+    maxcharts=1
+    groupby='[
+              {"field": "division", "aggregate": "count(division)", "chart": "bar"},
+              {"field": "gender", "aggregate": "count(gender)", "chart": "pie"},
+              {"field": "eyeColor", "aggregate": "count(eyeColor)", "chart": "bar"},
+              {"field": "age", "aggregate": "count(age)", "chart": "pie"}]'>  
+</ez-data-drilldown>
+
+        </template>
+      </demo-snippet>
+    </div>
+    <div id="message1"></div>
+    <br><br><br>
+
+
+
+ 
+    <script>
+    // addEventListener('DOMContentLoaded', function(){ 
+
+    // //    setTimeout(function(){ 
+    //       console.log("Start Listening...");
+    //     var data1 = document.querySelector('#combo1-data');
+
+    //       data1.addEventListener("ez-data-drilldown-ready", function(e) {
+    //         var message = document.querySelector('#message1');
+    //         message.innerHTML = "<b><u>'data-ready' event fired:</u></b>&nbsp;&nbsp;&nbsp;";
+    //         message.innerHTML += "<br>e.detail.name = " + JSON.stringify(e.detail.name);
+    //         message.innerHTML += "<br>e.detail.payload = " + JSON.stringify(e.detail.payload);
+    //       }, false);
+          
+    //   //  }, 1000);
+
+
+    //   }, false);
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<body>
+
+    <div id="app">
+        <ez-data-drilldown
+            name="chart2" 
+            url='./data/srch-data-30000.txt' 
+            title="30,000 records by Revenue"
+            height="500px"  
+            width="600px"
+            maxcharts=2
+            :groupby="groupBy2">  
+        </ez-data-drilldown>
+        <ez-data-drilldown
+            name="chart1" 
+            url='./data/srch-data.txt' 
+            :title="title"
+            height="500px"  
+            width="600px"
+            maxcharts=2
+            :groupby="groupBy">  
+        </ez-data-drilldown>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <script src="../../ez-data-drilldown-loader.js"></script>
+    <script>
+
+    Vue.config.ignoredElements = ['ez-data-drilldown']
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                title: 'Hello Vue Binding',
+                groupBy: JSON.stringify(
+                        [{"field": "company", "aggregate": "sum(revenue)", "chart": "pie"},
+                        {"field": "division", "aggregate": "sum(revenue)", "chart": "bar"},
+                        {"field": "gender", "aggregate": "sum(revenue)", "chart": "pie"},
+                        {"field": "eyeColor", "aggregate": "sum(revenue)", "chart": "bar"},
+                        {"field": "age", "aggregate": "sum(revenue)", "chart": "pie"}]),
+                groupBy2: JSON.stringify(
+                        [{"field": "company", "aggregate": "sum(revenue)", "chart": "pie"},
+                        {"field": "date_trunc(month,startdate)", "aggregate": "sum(revenue)", "chart": "line"},
+                        {"field": "division", "aggregate": "sum(revenue)", "chart": "bar"},
+                        {"field": "gender", "aggregate": "sum(revenue)", "chart": "pie"},
+                        {"field": "eyeColor", "aggregate": "sum(revenue)", "chart": "bar"},
+                        {"field": "age", "aggregate": "sum(revenue)", "chart": "pie"}])
+            }
+        })
+        
+    </script>
+</body>
