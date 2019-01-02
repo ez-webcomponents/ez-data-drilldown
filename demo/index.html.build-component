@@ -8,6 +8,7 @@
             height="500px"  
             width="600px"
             maxcharts=2
+            localfilter='[{"field": "startdate", "action": "gt", "value": "2018-01-01"}]'
             :groupby="groupBy2">  
         </ez-data-drilldown>
         <ez-data-drilldown
@@ -17,6 +18,7 @@
             height="500px"  
             width="600px"
             maxcharts=2
+            localfilter='[{"field": "startdate", "action": "gt", "value": "2018-01-01"}]'
             :groupby="groupBy">  
         </ez-data-drilldown>
     </div>
@@ -33,14 +35,14 @@
                 title: 'Hello Vue Binding',
                 groupBy: JSON.stringify(
                         [{"field": "company", "aggregate": "sum(revenue)", "chart": "pie"},
-                        {"field": "division", "aggregate": "sum(revenue)", "chart": "bar"},
+                        {"field": "division", "aggregate": "boxplot(revenue)", "chart": "boxplot"},
                         {"field": "gender", "aggregate": "sum(revenue)", "chart": "pie"},
                         {"field": "eyeColor", "aggregate": "sum(revenue)", "chart": "bar"},
                         {"field": "age", "aggregate": "sum(revenue)", "chart": "pie"}]),
                 groupBy2: JSON.stringify(
                         [{"field": "company", "aggregate": "sum(revenue)", "chart": "pie"},
                         {"field": "date_trunc(month,startdate)", "aggregate": "sum(revenue)", "chart": "line"},
-                        {"field": "division", "aggregate": "sum(revenue)", "chart": "bar"},
+                        {"field": "division", "aggregate": "boxplot(revenue)", "chart": "boxplot"},
                         {"field": "gender", "aggregate": "sum(revenue)", "chart": "pie"},
                         {"field": "eyeColor", "aggregate": "sum(revenue)", "chart": "bar"},
                         {"field": "age", "aggregate": "sum(revenue)", "chart": "pie"}])

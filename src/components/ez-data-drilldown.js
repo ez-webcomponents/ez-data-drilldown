@@ -10,7 +10,7 @@ import '@polymer/paper-card/paper-card.js';
 import 'jquery/dist/jquery.min.js';
 import 'chart.js/dist/Chart.bundle.js';
 //import 'chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.js';
-import _ from 'lodash-es';
+import { default as cloneDeep } from 'lodash-es/cloneDeep';
 import {EzGroupbyTreeMixin} from '@ez-webcomponents/ez-groupby-tree-mixin/src/components/ez-groupby-tree-mixin.js'; 
 //import * as BoxPlot from 'chartjs-chart-box-and-violin-plot/build/Chart.BoxPlot.js';
 //import 'chartjs-chart-box-and-violin-plot/src/index.js';
@@ -60,7 +60,7 @@ class EzDataDrilldown extends EzGroupbyTreeMixin(LitElement) {
         try {
             //console.log("GROUP BY=",me.groupby);
             me.fullGroupBy = JSON.parse(me.groupby);
-            me.fullGroupByOrig = _.cloneDeep(me.fullGroupBy);
+            me.fullGroupByOrig = cloneDeep(me.fullGroupBy);
         } catch (e) {
             alert("Sorry could not parse 'groupby' attribute -- Please check your JSON formatting.");
             return;
@@ -234,7 +234,7 @@ createDrillDownGraph(options) {
     }
 
     options.group.chartConfig = {};
-    options.group.chartConfig = _.cloneDeep(me.getMainChartConfig());
+    options.group.chartConfig = cloneDeep(me.getMainChartConfig());
     //console.log("CONFIG",options.group.chartConfig);
     options.group.chartConfig.type = options.drilldown[0].chart;
     if (options.drilldown[0].chart== 'pie') {
@@ -447,7 +447,7 @@ chart1Listener(evt) {
        //        while we create the second graph.  In the second graph we do re-use the chartData each 
        //        time for subsequent drilldowns and it is ok since we detroy and re-create the chart 
        //        each time for the second graph.
-       var meta1 = _.cloneDeep(chartData.datasets[0].meta1[idx]);
+       var meta1 = cloneDeep(chartData.datasets[0].meta1[idx]);
        
        var color = chartData.datasets[0].backgroundColor[idx];
 
