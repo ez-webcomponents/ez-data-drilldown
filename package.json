@@ -1,6 +1,6 @@
 {
   "name": "@ez-webcomponents/ez-data-drilldown",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A drilldown charting widget that drills down into the data based on the 'groupby' attribute ",
   "main": "index.js",
   "repository": "git+https://github.com/ez-webcomponents/ez-data-drilldown.git",
@@ -8,13 +8,22 @@
   "license": "MIT",
   "dependencies": {
     "@ez-webcomponents/ez-groupby-tree-mixin": "^1.0.3",
+    "@lrnwebcomponents/paper-lightbox": "^0.0.31",
     "@polymer/lit-element": "^0.6.5",
+    "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-card": "^3.0.1",
+    "@polymer/paper-dialog": "^3.0.1",
+    "@polymer/paper-item": "^3.0.1",
+    "@polymer/paper-menu": "^0.0.3",
     "@polymer/polymer": "3.0.2",
+    "@vaadin/vaadin-context-menu": "^4.2.1",
+    "@vaadin/vaadin-list-box": "^1.1.0",
     "chart.js": "^2.7.3",
     "chartjs-chart-box-and-violin-plot": "^1.1.2",
     "chartjs-plugin-datalabels": "^0.5.0",
     "chartjs-plugin-labels": "^1.1.0",
+    "es6-url-template": "^1.0.3",
+    "iframe-lightbox": "^0.2.8",
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
     "lodash-es": "^4.17.11"
@@ -26,7 +35,14 @@
     "@polymer/iron-a11y-keys-behavior": "3.0.0-pre.21",
     "@polymer/iron-a11y-announcer": "3.0.0-pre.21",
     "@polymer/lit-element": "0.6.5",
-    "lit-html": "1.0.0-rc.1"
+    "lit-html": "1.0.0-rc.1",
+    "@polymer/polymer": "3.0.2",
+    "@polymer/iron-flex-layout": "3.0.1",
+    "@polymer/paper-styles": "3.0.1",
+    "@polymer/font-roboto": "3.0.2",
+    "@polymer/iron-behaviors": "3.0.1",
+    "@polymer/iron-resizable-behavior": "3.0.1",
+    "@polymer/iron-selector": "3.0.1"
   },
   "devDependencies": {
     "@polymer/iron-demo-helpers": "^3.0.0-pre.21",

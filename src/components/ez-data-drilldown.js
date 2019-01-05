@@ -7,17 +7,15 @@ This program is available under MIT license, available at
 
 import {LitElement, html} from '@polymer/lit-element';
 import '@polymer/paper-card/paper-card.js';
+import '@polymer/paper-dialog/paper-dialog.js';
+import '@polymer/paper-item/paper-item.js';
+import '@polymer/paper-button/paper-button.js';
 import 'jquery/dist/jquery.min.js';
 import 'chart.js/dist/Chart.bundle.js';
-//import 'chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.js';
+import './iframe-lightbox.js';
 import { default as cloneDeep } from 'lodash-es/cloneDeep';
 import {EzGroupbyTreeMixin} from '@ez-webcomponents/ez-groupby-tree-mixin/src/components/ez-groupby-tree-mixin.js'; 
-//import * as BoxPlot from 'chartjs-chart-box-and-violin-plot/build/Chart.BoxPlot.js';
-//import 'chartjs-chart-box-and-violin-plot/src/index.js';
-//export {default as BoxAndWhiskers} from './elements/boxandwhiskers';
-
-
-
+import UriTemplate from 'es6-url-template';
 
 /**
  * @file ez-data-drilldown.js
@@ -26,7 +24,7 @@ import {EzGroupbyTreeMixin} from '@ez-webcomponents/ez-groupby-tree-mixin/src/co
  * A drilldown charting component that drills down into the data based on the 'groupby' attribute.  
  * Uses highcharts for the base charting.
  */
-class EzDataDrilldown extends EzGroupbyTreeMixin(LitElement) {
+export class EzDataDrilldown extends EzGroupbyTreeMixin(LitElement) {
 
 /**
    * @function constructor()
@@ -88,9 +86,12 @@ class EzDataDrilldown extends EzGroupbyTreeMixin(LitElement) {
         if (typeof me.cardelevation == 'undefined') {
             me.cardelevation = "1";
         }
+        
 
       var chartDiv = this.shadowRoot.querySelector('#chart-div1');
       var chartDiv2 = this.shadowRoot.querySelector('#chart-div2');
+      me.menuDialog = this.shadowRoot.querySelector('#menudialog');
+
       //var chartDiv = document.createElement("div");
       me.chartDiv = chartDiv;
       me.chartDiv2 = chartDiv2;
@@ -479,7 +480,11 @@ rightclick1Listener(evt) {
        var meta1 = chartData.datasets[0].meta1[idx];
        var color = chartData.datasets[0].backgroundColor[idx];
 
-       //TODO:  Throw right click event here with meta data.
+       me.metaDownload = meta1;
+
+       evt.stopPropagation();
+
+       // Throw right click event here with meta data.
         me.dispatchEvent(new CustomEvent('ez-right-click', {
             bubbles: true,
             composed: true,
@@ -489,10 +494,43 @@ rightclick1Listener(evt) {
             }
         })); 
 
-       //window.open(meta1.group.contexturl, '_blank');
+        me.removeMenu();
+        me.addMenu(meta1,"javascript:;","Download subset to CSV");
+        if (typeof meta1.group.contexturl != 'undefined' && meta1.group.contexturl.length > 0) {
+            me.addMenu(meta1,meta1.group.contexturl,"Go To URL");
+        }
+        me.menuDialog.open();
 
-       this.downloadDataToCsv(meta1.path, meta1.downloadObj, meta1.data);
+       return false;
      }
+};
+
+removeMenu() {
+    while (this.menuDialog.hasChildNodes()) {
+        this.menuDialog.removeChild(this.menuDialog.lastChild);
+    }
+}
+
+
+addMenu(meta,url,menuName) {
+    var me = this;
+    var item = document.createElement('paper-item');
+    item.style="min-height: unset; margin-bottom: unset; margin-top: unset; padding: 2px;";
+    if (/^javascript:/.test(url)) {
+        var a = $("<a href='"+url+"'>"+menuName+"</a>");
+        a[0].addEventListener('click', function() {
+            me.downloadDataToCsv(meta,meta.downloadObj,meta.data);
+        });
+    } else {
+        const emailUrlTemplate = new UriTemplate(url);
+        const newUrl = emailUrlTemplate.expand(meta.data[0]);
+        // TODO:  parse the url to replace any fields before adding to the menu
+        var a = $("<a href='"+newUrl+"' class='iframe-lightbox-link' data-scrolling='true'>"+menuName+"</a>");
+        a[0].lightbox = new IframeLightbox(a[0]);
+    }
+    
+    item.appendChild(a[0]);
+    this.menuDialog.appendChild(item);
 };
 
 chart2Listener(evt) {
@@ -537,6 +575,9 @@ rightclick2Listener(evt) {
        var meta1 = chartData.datasets[0].meta1[idx];
        var color = chartData.datasets[0].backgroundColor[idx];
 
+       evt.stopPropagation();
+
+        // Throw right click event here with meta data.
         me.dispatchEvent(new CustomEvent('ez-right-click', {
             bubbles: true,
             composed: true,
@@ -545,8 +586,12 @@ rightclick2Listener(evt) {
                 meta: meta1
             }
         })); 
-
-       this.downloadDataToCsv(meta1.path, meta1.downloadObj, meta1.data);
+        me.removeMenu();
+        me.addMenu(meta1,"javascript:;","Download subset to CSV");
+        if (typeof meta1.group.contexturl != 'undefined' && meta1.group.contexturl.length > 0) {
+            me.addMenu(meta1,meta1.group.contexturl,"Go To URL");
+        }
+        me.menuDialog.open();
      }
 };
 
@@ -688,7 +733,7 @@ addChartListeners() {
     }
 
     return html`
-        <style>
+    <style>
         .row {
             margin-right: -15px;
             margin-left: -15px;
@@ -705,19 +750,22 @@ addChartListeners() {
 
         </style>
         <div>
-        <paper-card elevation=${this.cardelevation} style="width: ${this.width}; height: ${this.height}" class="row">
-            <div class=${cssClass1}>
+        <paper-dialog id="menudialog">
+        <paper-item><a class="iframe-lightbox-link" href="google.com">test</a></paper-item>
+        </paper-dialog>
+        <paper-card  elevation=${this.cardelevation} style="width: ${this.width}; height: ${this.height}" class="row">
+            <div id="div1" class=${cssClass1}>
                 <div style="position:relative">
                     <button hidden style="position: absolute; right: 10px; top: 10px; z-index: 999" id="back-button1">Back</button>
                 </div>
                 <div hidden id="title-div" style="font-size: 18px; font-family: : 'Lucida Grande', 'Lucida Sans Unicode', Arial, Helvetica, sans-serif;"><center>${this.title}<center></div>
-                <canvas width="100%" height="90%" id="chart-div1"></canvas>
+                <canvas oncontextmenu="return false;" width="100%" height="90%" id="chart-div1"></canvas>
             </div>
-            <div class=${cssClass2}>
+            <div id="div2" class=${cssClass2}>
                 <div style="position:relative">
                     <button hidden style="position: absolute; right: 5px; top: 25px; z-index: 999" id="back-button2">Back</button>
                 </div>
-                <canvas width="100%" height="90%" id="chart-div2"></canvas>
+                <canvas oncontextmenu="return false;" width="100%" height="90%" id="chart-div2"></canvas>
             </div>
         </paper-card>
         </div>
@@ -725,5 +773,6 @@ addChartListeners() {
     }
 
 }
+
 
 window.customElements.define('ez-data-drilldown', EzDataDrilldown);
