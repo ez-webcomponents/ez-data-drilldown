@@ -1,10 +1,10 @@
 # ez-data-drilldown
-A drilldown charting widget that drills down into the data based on the 'groupby' attribute.  Uses highcharts for the base charting.
+A drilldown charting widget that drills down into the data based on the 'groupby' attribute.  Uses chartjs for the base charting.
 
 Copyright (c) 2018 Martin Israelsen
 @author Martin Israelsen <martin.israelsen@gmail.com>
 
-## Download from npm using yarn into your node_modules directory.  STRONG WARNING:  the --flat option is very important!  Do not leave out the --flat option to yarn! :) 
+## Download from npm using yarn into your node_modules directory.  STRONG WARNING:  the --flat option is very important! 
 ```
 $ yarn upgrade --flat
 $ yarn add @ez-webcomponents/ez-data-drilldown --flat
@@ -35,19 +35,26 @@ or
     <!-- Now add ez-data-drilldown to html section -->
 
     <ez-data-drilldown
-        url='./data/srch-data.txt'
-        title="Revenue By Company"
-        cardelevation="0"
-        height="400px"
-        width="500px"
-        maxcharts=1
-        groupby='[{"field": "company", "aggregate": "sum(revenue)", "chart": "pie"},
-                  {"field": "date_trunc(month,startdate)", "aggregate": "sum(revenue)", "chart": "line"},
-                  {"field": "division", "aggregate": "sum(revenue)", "chart": "bar"},
+          url='./data/srch-data-30000.txt' 
+          title="30,000 Records By Company Revenue" 
+          height="400px"
+          width="800px"
+          maxcharts=2
+          localfilter='[{"field": "company", "action": "multiple", "value": "Spillman2,Nucore2"},
+                        {"field": "startdate", "action": "gt", "value": "2015-12-01"}]'
+          groupby='[
+                  {"field": "company", "aggregate": "sum(revenue)", "chart": "pie", 
+                      "contextmenu": [{"name": "Wikipedia", "target": "_blank", "url":"https://en.wikipedia.org/wiki/{company}"}, 
+                                      {"name": "USU",       "target": "modal", "url":"https://www.usu.edu/"}]},
+                  {"field": "date_trunc(month,startdate)", "aggregate": "boxplot(revenue)", "chart": "boxplot",
+                  "contextmenu": [{"name": "Wikipedia2", "target": "_self", "url":"https://en.wikipedia.org/wiki/{company}"}, 
+                                  {"name": "USU2",       "target": "modal", "url":"https://www.usu.edu/"}]},
+                  {"field": "division", "aggregate": "sum(revenue)", "chart": "pie"},
+                  {"field": "age", "aggregate": "sum(revenue)", "chart": "bar"},
                   {"field": "gender", "aggregate": "sum(revenue)", "chart": "pie"},
-                  {"field": "eyeColor", "aggregate": "sum(revenue)", "chart": "bar"},
-                  {"field": "age", "aggregate": "sum(revenue)", "chart": "pie"}]'>
-    </ez-data-drilldown>
+                  {"field": "eyeColor", "aggregate": "sum(revenue)", "chart": "bar"}
+                  ]'>  
+        </ez-data-drilldown>
   </body>
 </html>
 

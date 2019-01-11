@@ -99,7 +99,7 @@
   dependencies:
     "@polymer/polymer" "^3.0.0"
 
-"@polymer/iron-icon@3.0.0-pre.21", "@polymer/iron-icon@^3.0.0-pre.18", "@polymer/iron-icon@^3.0.0-pre.21", "@polymer/iron-icon@^3.0.0-pre.26":
+"@polymer/iron-icon@3.0.0-pre.21", "@polymer/iron-icon@^3.0.0-pre.18", "@polymer/iron-icon@^3.0.0-pre.26", "@polymer/iron-icon@^3.0.1":
   version "3.0.0-pre.21"
   resolved "https://registry.yarnpkg.com/@polymer/iron-icon/-/iron-icon-3.0.0-pre.21.tgz#5ef3e483f02823778e99c1b5e16ddac472b5dce5"
   dependencies:
@@ -107,7 +107,7 @@
     "@polymer/iron-meta" "^3.0.0-pre.21"
     "@polymer/polymer" "^3.0.0"
 
-"@polymer/iron-icons@^3.0.0-pre.21":
+"@polymer/iron-icons@^3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@polymer/iron-icons/-/iron-icons-3.0.1.tgz#c1bd31d8483afbdb5422cdc384081e19c9267cfe"
   dependencies:
@@ -253,6 +253,15 @@
     "@polymer/iron-overlay-behavior" "^3.0.0-pre.27"
     "@polymer/neon-animation" "^3.0.0-pre.26"
     "@polymer/paper-dialog-behavior" "^3.0.0-pre.26"
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/paper-icon-button@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@polymer/paper-icon-button/-/paper-icon-button-3.0.1.tgz#4af7129c82de9d4a0ad59d43e1d3d8ec93414fbf"
+  dependencies:
+    "@polymer/iron-icon" "^3.0.0-pre.26"
+    "@polymer/paper-behaviors" "^3.0.0-pre.27"
+    "@polymer/paper-styles" "^3.0.0-pre.26"
     "@polymer/polymer" "^3.0.0"
 
 "@polymer/paper-input@^3.0.0-pre.21":
@@ -402,12 +411,12 @@
     "@vaadin/vaadin-development-mode-detector" "^2.0.0"
 
 "@webcomponents/shadycss@^1.2.0", "@webcomponents/shadycss@^1.5.2":
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.7.1.tgz#dba82c431449d2250b49f60db495d05f477882d0"
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.8.0.tgz#10340b87626f876841033b21b5221c3701252e10"
 
 "@webcomponents/webcomponentsjs@^2.0.2":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.2.1.tgz#bf28cdad466aaf85d88ee56aebed32c83f4c1328"
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.2.2.tgz#48ad750ea3d96266322cc462f30f46a822c20303"
 
 chart.js@^2.7.2, chart.js@^2.7.3:
   version "2.7.3"
@@ -455,7 +464,7 @@ clipboard@^2.0.0:
 
 color-convert@^0.5.3:
   version "0.5.3"
-  resolved "http://registry.npmjs.org/color-convert/-/color-convert-0.5.3.tgz#bdb6c69ce660fadffe0b0007cc447e1b9f7282bd"
+  resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-0.5.3.tgz#bdb6c69ce660fadffe0b0007cc447e1b9f7282bd"
 
 color-name@^1.0.0:
   version "1.1.4"
@@ -501,7 +510,7 @@ lodash@^4.17.11:
 
 marked@~0.3.9:
   version "0.3.19"
-  resolved "http://registry.npmjs.org/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
 
 moment@^2.10.2:
   version "2.23.0"

@@ -34,32 +34,43 @@
         <!-- Now add ez-data-drilldown to html section -->
         <div style="display:inline"></div>
         <ez-data-drilldown
-            url='./data/srch-data.txt' 
-            title="Revenue By Company"
-            cardelevation="2"
-            height="300px"
-            width="300px"
-            maxcharts=1
-            localfilter='[{"field": "startdate", "action": "gt", "value": "2018-01-01"}]',
-            groupby='[{"field": "company", "aggregate": "sum(revenue)", "chart": "pie", "contexturl": "https://en.wikipedia.org/wiki/{company}"},
-                      {"field": "date_trunc(month,startdate)", "aggregate": "sum(revenue)", "chart": "line", "contexturl": "https://lds.org/{company}/{startdate}"},
-                      {"field": "division", "aggregate": "sum(revenue)", "chart": "bar"},
-                      {"field": "gender", "aggregate": "sum(revenue)", "chart": "pie"},
-                      {"field": "eyeColor", "aggregate": "sum(revenue)", "chart": "bar"},
-                      {"field": "age", "aggregate": "sum(revenue)", "chart": "pie"}]'>  
+          url='./data/srch-data-30000.txt' 
+          title="By Company Revenue" 
+          height="300px"
+          width="300px"
+          maxcharts=1
+          localfilter='[{"field": "company", "action": "multiple", "value": "Spillman2,Nucore2"},
+                        {"field": "startdate", "action": "gt", "value": "2015-12-01"}]'
+          groupby='[
+                  {"field": "company", "aggregate": "sum(revenue)", "chart": "pie", 
+                      "contextmenu": [{"name": "Wikipedia", "target": "modal", "url":"https://en.wikipedia.org/wiki/{company}"}, 
+                                      {"name": "USU",       "target": "_blank", "url":"https://www.usu.edu/"}]},
+                  {"field": "date_trunc(month,startdate)", "aggregate": "boxplot(revenue)", "chart": "boxplot",
+                  "contextmenu": [{"name": "Wikipedia", "target": "modal", "url":"https://en.wikipedia.org/wiki/{company}"}, 
+                                  {"name": "USU2",       "target": "modal", "url":"https://www.usu.edu/"}]},
+                  {"field": "division", "aggregate": "sum(revenue)", "chart": "pie"},
+                  {"field": "age", "aggregate": "sum(revenue)", "chart": "bar"},
+                  {"field": "gender", "aggregate": "sum(revenue)", "chart": "pie"},
+                  {"field": "eyeColor", "aggregate": "sum(revenue)", "chart": "bar"}
+                  ]'>  
         </ez-data-drilldown>
 
         <ez-data-drilldown
+          id="drilldown2"
           url='./data/srch-data-30000.txt' 
           title="30,000 Records By Company Revenue" 
           height="400px"
           width="800px"
           maxcharts=2
           localfilter='[{"field": "company", "action": "multiple", "value": "Spillman2,Nucore2"},
-                        {"field": "startdate", "action": "gt", "value": "2015-12-01"}]',
+                        {"field": "startdate", "action": "gt", "value": "2015-12-01"}]'
           groupby='[
-                  {"field": "company", "aggregate": "sum(revenue)", "chart": "pie", "contexturl": "https://en.wikipedia.org/wiki/{company}"},
-                  {"field": "date_trunc(month,startdate)", "aggregate": "boxplot(revenue)", "chart": "boxplot", "contexturl": "https://lds.org"},
+                  {"field": "company", "aggregate": "sum(revenue)", "chart": "pie", 
+                      "contextmenu": [{"name": "Wikipedia", "target": "modal", "url":"https://en.wikipedia.org/wiki/{company}"}, 
+                                      {"name": "USU",       "target": "_blank", "url":"https://www.usu.edu/"}]},
+                  {"field": "date_trunc(month,startdate)", "aggregate": "boxplot(revenue)", "chart": "boxplot",
+                  "contextmenu": [{"name": "Wikipedia2", "target": "modal", "url":"https://en.wikipedia.org/wiki/{company}"}, 
+                                  {"name": "USU2",       "target": "modal", "url":"https://www.usu.edu/"}]},
                   {"field": "division", "aggregate": "sum(revenue)", "chart": "pie"},
                   {"field": "age", "aggregate": "sum(revenue)", "chart": "bar"},
                   {"field": "gender", "aggregate": "sum(revenue)", "chart": "pie"},
@@ -78,23 +89,29 @@
 
  
     <script>
-    // addEventListener('DOMContentLoaded', function(){ 
+    addEventListener('DOMContentLoaded', function(){ 
 
-    // //    setTimeout(function(){ 
-    //       console.log("Start Listening...");
-    //     var data1 = document.querySelector('#combo1-data');
+      // Test update of the attributes
+      setTimeout(function(){
+            var dd2 = document.querySelector('#drilldown2');
+            console.log("Timeout...");
+            dd2.maxcharts = 2;
+            dd2.groupby = JSON.stringify([
+                  {"field": "division", "aggregate": "sum(revenue)", "chart": "line", 
+                      "contextmenu": [{"name": "Wikipedia", "target": "modal", "url":"https://en.wikipedia.org/wiki/{company}"}, 
+                                      {"name": "USU",       "target": "_blank", "url":"https://www.usu.edu/"}]},
+                  {"field": "date_trunc(month,startdate)", "aggregate": "boxplot(revenue)", "chart": "boxplot",
+                  "contextmenu": [{"name": "Wikipedia2", "target": "modal", "url":"https://en.wikipedia.org/wiki/{company}"}, 
+                                  {"name": "USU2",       "target": "modal", "url":"https://www.usu.edu/"}]},
+                  {"field": "company", "aggregate": "sum(revenue)", "chart": "pie"},
+                  {"field": "age", "aggregate": "sum(revenue)", "chart": "bar"},
+                  {"field": "gender", "aggregate": "sum(revenue)", "chart": "pie"},
+                  {"field": "eyeColor", "aggregate": "sum(revenue)", "chart": "bar"}
+                  ]);
+        }, 10000);
 
-    //       data1.addEventListener("ez-data-drilldown-ready", function(e) {
-    //         var message = document.querySelector('#message1');
-    //         message.innerHTML = "<b><u>'data-ready' event fired:</u></b>&nbsp;&nbsp;&nbsp;";
-    //         message.innerHTML += "<br>e.detail.name = " + JSON.stringify(e.detail.name);
-    //         message.innerHTML += "<br>e.detail.payload = " + JSON.stringify(e.detail.payload);
-    //       }, false);
-          
-    //   //  }, 1000);
 
-
-    //   }, false);
+      }, false);
 
     </script>
   </body>

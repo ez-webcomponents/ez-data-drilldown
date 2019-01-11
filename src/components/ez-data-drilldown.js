@@ -16,20 +16,23 @@ import './iframe-lightbox.js';
 import { default as cloneDeep } from 'lodash-es/cloneDeep';
 import {EzGroupbyTreeMixin} from '@ez-webcomponents/ez-groupby-tree-mixin/src/components/ez-groupby-tree-mixin.js'; 
 import UriTemplate from 'es6-url-template';
+import '@polymer/iron-icon/iron-icon.js';
+import '@polymer/iron-icons/iron-icons.js';
+import '@polymer/paper-icon-button/paper-icon-button.js';
 
 /**
  * @file ez-data-drilldown.js
  * @author Martin Isaelsen <martin.israelsen@gmail.com>
  * @description
  * A drilldown charting component that drills down into the data based on the 'groupby' attribute.  
- * Uses highcharts for the base charting.
+ * Uses chartjs for the base charting.
  */
 export class EzDataDrilldown extends EzGroupbyTreeMixin(LitElement) {
 
 /**
    * @function constructor()
    * @author Martin Israelsen <martin.israelsen@gmail.com>
-   *    Sets default values for attributes and initializes highcharts.  Sends off 
+   *    Sets default values for attributes and initializes chartjs.  Sends off 
    *    the ajax request to get the data calls groupBy() to group the data and brings up 
    *    the inital top-level chart.   Listens to back button clicks to go up the drilldown chart stack. 
    */
@@ -55,78 +58,83 @@ export class EzDataDrilldown extends EzGroupbyTreeMixin(LitElement) {
       };
 
     this.addEventListener('rendered', async (e) => {
-        try {
-            //console.log("GROUP BY=",me.groupby);
-            me.fullGroupBy = JSON.parse(me.groupby);
-            me.fullGroupByOrig = cloneDeep(me.fullGroupBy);
-        } catch (e) {
-            alert("Sorry could not parse 'groupby' attribute -- Please check your JSON formatting.");
-            return;
-        }
 
-        try {
-            me.localFilter = JSON.parse(me.localfilter);
-        } catch (e) {
-            alert("Sorry could not parse 'localfilter' attribute -- Please check your JSON formatting.");
-            return;
-        }
+        // Load these chart modules here.  Could not load them via es6 imports
+        me.importer.urls([
+            "https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.5.0", 
+            "https://cdn.jsdelivr.net/npm/chartjs-chart-box-and-violin-plot@1.1.2/build/Chart.BoxPlot.min.js"
+          ]).then(() => {
 
-        if (typeof me.maxcharts === 'undefined') {
-            me.maxcharts = 1;
-        }
+            try {
+                //console.log("GROUP BY=",me.groupby);
+                me.fullGroupBy = JSON.parse(me.groupby);
+                me.fullGroupByOrig = cloneDeep(me.fullGroupBy);
+            } catch (e) {
+                alert("Sorry could not parse 'groupby' attribute -- Please check your JSON formatting.");
+                return;
+            }
 
-        if (typeof me.height === 'undefined') {
-            me.height= "100%";
-        }
+            try {
+                me.localFilter = JSON.parse(me.localfilter);
+            } catch (e) {
+                alert("Sorry could not parse 'localfilter' attribute -- Please check your JSON formatting.");
+                return;
+            }
 
-        if (typeof me.title == 'undefined') {
-            me.title = "Please Add a Title";
-        }
+            if (typeof me.maxcharts === 'undefined') {
+                me.maxcharts = 1;
+            }
 
-        if (typeof me.cardelevation == 'undefined') {
-            me.cardelevation = "1";
-        }
-        
+            if (typeof me.height === 'undefined') {
+                me.height= "100%";
+            }
 
-      var chartDiv = this.shadowRoot.querySelector('#chart-div1');
-      var chartDiv2 = this.shadowRoot.querySelector('#chart-div2');
-      me.menuDialog = this.shadowRoot.querySelector('#menudialog');
+            if (typeof me.title == 'undefined') {
+                me.title = "Please Add a Title";
+            }
 
-      //var chartDiv = document.createElement("div");
-      me.chartDiv = chartDiv;
-      me.chartDiv2 = chartDiv2;
-      me.listenersAlreadySet = false;
-      me.sendAjax();
+            if (typeof me.cardelevation == 'undefined') {
+                me.cardelevation = "1";
+            }
+            
 
-      //this.initHighcharts(this);
+            var chartDiv = this.shadowRoot.querySelector('#chart-div1');
+            var chartDiv2 = this.shadowRoot.querySelector('#chart-div2');
+            me.menuDialog = this.shadowRoot.querySelector('#menudialog');
 
-      me.mainChartConfig = me.getMainChartConfig(me.title, "100%");
-      //me.mainChartConfig = me.getMainChartConfig(me.title, "100%");
+            //var chartDiv = document.createElement("div");
+            me.chartDiv = chartDiv;
+            me.chartDiv2 = chartDiv2;
+            me.listenersAlreadySet = false;
+            me.sendAjax();
 
-      me.globalDrilldownStack = [];
-      var titleDiv = me.shadowRoot.querySelector("#title-div");
+            me.mainChartConfig = me.getMainChartConfig(me.title, "100%");
 
-      if (me.maxcharts == 1) {
-        var backButton = me.shadowRoot.querySelector("#back-button1");
-      } else {
-        var backButton = me.shadowRoot.querySelector("#back-button2");
-      }
+            me.globalDrilldownStack = [];
+            var titleDiv = me.shadowRoot.querySelector("#title-div");
 
-      backButton.addEventListener('click', function(e){
-        var options1 = me.globalDrilldownStack.pop();
-        var options = me.globalDrilldownStack.pop();
-        if (typeof options === 'undefined') {
-            backButton.hidden = true;
-            me.chartDiv2.hidden = true;
-            titleDiv.hidden = true;
-            me.chartData(me.fullGroupBy,me.chartDiv,0);
-        } else {
-            backButton.hidden = false;
-            me.chartDiv2.hidden = false;
-            titleDiv.hidden = false;
-            me.createDrillDownGraph(options);
-        }
-      });
+            if (me.maxcharts == 1) {
+                var backButton = me.shadowRoot.querySelector("#back-button1");
+            } else {
+                var backButton = me.shadowRoot.querySelector("#back-button2");
+            }
+
+            backButton.addEventListener('click', function(e){
+                var options1 = me.globalDrilldownStack.pop();
+                var options = me.globalDrilldownStack.pop();
+                if (typeof options === 'undefined') {
+                    backButton.hidden = true;
+                    me.chartDiv2.hidden = true;
+                    titleDiv.hidden = true;
+                    me.chartData(me.fullGroupBy,me.chartDiv,0);
+                } else {
+                    backButton.hidden = false;
+                    me.chartDiv2.hidden = false;
+                    titleDiv.hidden = false;
+                    me.createDrillDownGraph(options);
+                }
+            });
+        });
     });
   }
 
@@ -182,7 +190,13 @@ export class EzDataDrilldown extends EzGroupbyTreeMixin(LitElement) {
             plugins: {
                 datalabels: {
                     formatter: function(value, context) {
-                        return context.chart.data.labels[context.dataIndex];
+                        // Only show labels on pie charts
+                        if (context.chart.chart.config.type == "pie") {
+                            return context.chart.data.labels[context.dataIndex];
+                        } else {
+                            return "";
+                        }
+
                     }
                 }
             },
@@ -336,7 +350,6 @@ createDrillDownGraph(options) {
    * @function populateChartData()
    * @author Martin Israelsen <martin.israelsen@gmail.com>
    *   Fills in the series and categories for the graph groupings. 
-   *   Also calculates the color for each grouping.
    *           
    * @param me          A refrence to self
    * @param series      The level of the tree we want to fill
@@ -470,7 +483,9 @@ chart1Listener(evt) {
 rightclick1Listener(evt) {
     var me = this;
     var activePoints = this.chart1.getElementsAtEvent(evt);
+    
     if (activePoints[0]) {
+       evt.preventDefault();
        var chartData = activePoints[0]['_chart'].config.data;
        var idx = activePoints[0]['_index'];
        var meta = activePoints[0]['_meta'];
@@ -495,9 +510,12 @@ rightclick1Listener(evt) {
         })); 
 
         me.removeMenu();
-        me.addMenu(meta1,"javascript:;","Download subset to CSV");
-        if (typeof meta1.group.contexturl != 'undefined' && meta1.group.contexturl.length > 0) {
-            me.addMenu(meta1,meta1.group.contexturl,"Go To URL");
+        me.addMenu(meta1,{"name":"Download to CSV", "url":"csv"});
+
+        if (typeof meta1.group.contextmenu != 'undefined' && meta1.group.contextmenu.length > 0) {
+            for(var i=0; i<meta1.group.contextmenu.length; i++) {
+                me.addMenu(meta1,meta1.group.contextmenu[i]);
+            }        
         }
         me.menuDialog.open();
 
@@ -512,21 +530,46 @@ removeMenu() {
 }
 
 
-addMenu(meta,url,menuName) {
+addMenu(meta,menuItem) {
     var me = this;
+    me.selectedMenuMeta = meta;
+    me.selectedMenuItem = menuItem;
     var item = document.createElement('paper-item');
     item.style="min-height: unset; margin-bottom: unset; margin-top: unset; padding: 2px;";
-    if (/^javascript:/.test(url)) {
-        var a = $("<a href='"+url+"'>"+menuName+"</a>");
+
+    const UrlTemplate = new UriTemplate(menuItem.url);
+    menuItem.url = UrlTemplate.expand(meta.data[0]);
+
+    if (/^csv$/.test(menuItem.url)) {
+        //var a = $("<paper-button><iron-icon icon='cloud-download'></iron-icon>&nbsp;"+menuItem.name+"</paper-button>");
+        var a = $("<a href='javascript:;'><iron-icon icon='cloud-download'></iron-icon>"+menuItem.name+"</a>");
         a[0].addEventListener('click', function() {
             me.downloadDataToCsv(meta,meta.downloadObj,meta.data);
         });
     } else {
-        const emailUrlTemplate = new UriTemplate(url);
-        const newUrl = emailUrlTemplate.expand(meta.data[0]);
-        // TODO:  parse the url to replace any fields before adding to the menu
-        var a = $("<a href='"+newUrl+"' class='iframe-lightbox-link' data-scrolling='true'>"+menuName+"</a>");
-        a[0].lightbox = new IframeLightbox(a[0]);
+        if (menuItem.target === "modal") {
+            //var a = $("<paper-button><iron-icon icon='flip-to-front'></iron-icon>&nbsp;"+menuItem.name+"</paper-button>");
+            var a = $("<a href='"+menuItem.url+"' class='iframe-lightbox-link' data-scrolling='true'><iron-icon icon='flip-to-front'></iron-icon>"+menuItem.name+"</a>");
+            a[0].lightbox = new IframeLightbox(a[0]);
+        } else if (menuItem.target === "event") {
+            var a = $("<a href='javascript:;'>"+menuItem.name+"</a>");
+
+            a[0].addEventListener('click', function() {
+                me.dispatchEvent(new CustomEvent('ez-contextmenu-click', {
+                    bubbles: true,
+                    composed: true,
+                    detail: {
+                        target: this,
+                        menuItem: menuItem,
+                        meta: meta
+                    }
+                })); 
+            });
+        } else {
+            //var a = $("<paper-button><iron-icon icon='content-copy'></iron-icon>&nbsp;"+menuItem.name+"</paper-button>");
+            var a = $("<a target='"+menuItem.target+"' href='"+menuItem.url+"'><iron-icon icon='content-copy'></iron-icon>"+menuItem.name+"</a>");
+        }
+
     }
     
     item.appendChild(a[0]);
@@ -566,6 +609,7 @@ rightclick2Listener(evt) {
     var me = this;
     var activePoints = this.chart2.getElementsAtEvent(evt);
     if (activePoints[0]) {
+       evt.preventDefault();
        var chartData = activePoints[0]['_chart'].config.data;
        var idx = activePoints[0]['_index'];
        var meta = activePoints[0]['_meta'];
@@ -587,9 +631,11 @@ rightclick2Listener(evt) {
             }
         })); 
         me.removeMenu();
-        me.addMenu(meta1,"javascript:;","Download subset to CSV");
-        if (typeof meta1.group.contexturl != 'undefined' && meta1.group.contexturl.length > 0) {
-            me.addMenu(meta1,meta1.group.contexturl,"Go To URL");
+        me.addMenu(meta1,{"name":"Download to CSV", "url":"csv"});
+        if (typeof meta1.group.contextmenu != 'undefined' && meta1.group.contextmenu.length > 0) {
+            for(var i=0; i<meta1.group.contextmenu.length; i++) {
+                me.addMenu(meta1,meta1.group.contextmenu[i]);
+            }
         }
         me.menuDialog.open();
      }
@@ -635,13 +681,9 @@ addChartListeners() {
         if (typeof me.data[0] != 'undefined') {
             me.downloadFields = Object.keys(me.data[0]);
         }
-        me.importer.urls([
-            "https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.5.0", 
-            "https://cdn.jsdelivr.net/npm/chartjs-chart-box-and-violin-plot@1.1.2/build/Chart.BoxPlot.min.js"
-          ]).then(() => {
-            Chart.plugins.unregister(ChartDataLabels);
-            me.chartData(me.fullGroupBy,me.chartDiv,1);
-          });
+
+        Chart.plugins.unregister(ChartDataLabels);
+        me.chartData(me.fullGroupBy,me.chartDiv,1);
 
      }
     });
@@ -680,7 +722,7 @@ addChartListeners() {
  /**
    * @function properties
    * @author Martin Israelsen <martin.israelsen@gmail.com>
-   *   Define attributes that can be passed into the <ez-highcharts-drilldown> 
+   *   Define attributes that can be passed into the <ez-data-drilldown> 
    */
   static get properties() { 
     return { 
@@ -691,7 +733,8 @@ addChartListeners() {
         type: Object
       },
       groupby: {
-        type: String
+        type: String,
+        hasChanged: this._groupbyHasChanged
       },
       localfilter: {
         type: String
@@ -715,6 +758,28 @@ addChartListeners() {
           type: String
       }
     }
+  }
+
+/**
+   * @function update
+   * @author Martin Israelsen <martin.israelsen@gmail.com>
+   *   This lit-element life-cycle method is called when any properties are changed.
+   *    We check to see if certain properties have changed and then throw the event to 
+   *    re-initialize the graph they have changed.  
+   *    Note:  those properties that are in render template (i.e. height, width, etc) automatically get re-stamped 
+   *            into the DOM so do not need to be checked here.
+   */
+  update(changedProperties) {
+    var me = this;
+
+    // Must call super.update() or nothing will render.
+    super.update(changedProperties);
+    if (changedProperties.get('groupby') || changedProperties.get('url') || changedProperties.get('title')
+        || changedProperties.get('maxcharts') || changedProperties.get('localfilter')) {
+            this.dispatchEvent(new CustomEvent('rendered')); 
+        return true;
+    }
+    return false;
   }
 
    /**
@@ -759,13 +824,13 @@ addChartListeners() {
                     <button hidden style="position: absolute; right: 10px; top: 10px; z-index: 999" id="back-button1">Back</button>
                 </div>
                 <div hidden id="title-div" style="font-size: 18px; font-family: : 'Lucida Grande', 'Lucida Sans Unicode', Arial, Helvetica, sans-serif;"><center>${this.title}<center></div>
-                <canvas oncontextmenu="return false;" width="100%" height="90%" id="chart-div1"></canvas>
+                <canvas width="100%" height="90%" id="chart-div1"></canvas>
             </div>
             <div id="div2" class=${cssClass2}>
                 <div style="position:relative">
                     <button hidden style="position: absolute; right: 5px; top: 25px; z-index: 999" id="back-button2">Back</button>
                 </div>
-                <canvas oncontextmenu="return false;" width="100%" height="90%" id="chart-div2"></canvas>
+                <canvas width="100%" height="90%" id="chart-div2"></canvas>
             </div>
         </paper-card>
         </div>
