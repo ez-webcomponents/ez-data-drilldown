@@ -114,26 +114,31 @@ export class EzDataDrilldown extends EzGroupbyTreeMixin(LitElement) {
             var titleDiv = me.shadowRoot.querySelector("#title-div");
 
             if (me.maxcharts == 1) {
-                var backButton = me.shadowRoot.querySelector("#back-button1");
+                me.backButton = me.shadowRoot.querySelector("#back-button1");
             } else {
-                var backButton = me.shadowRoot.querySelector("#back-button2");
+                me.backButton = me.shadowRoot.querySelector("#back-button2");
             }
 
-            backButton.addEventListener('click', function(e){
-                var options1 = me.globalDrilldownStack.pop();
-                var options = me.globalDrilldownStack.pop();
-                if (typeof options === 'undefined') {
-                    backButton.hidden = true;
-                    me.chartDiv2.hidden = true;
-                    titleDiv.hidden = true;
-                    me.chartData(me.fullGroupBy,me.chartDiv,0);
-                } else {
-                    backButton.hidden = false;
-                    me.chartDiv2.hidden = false;
-                    titleDiv.hidden = false;
-                    me.createDrillDownGraph(options);
+            if (typeof me.listener1 === 'undefined') {
+                me.listener1 = function(e){
+                    var options1 = me.globalDrilldownStack.pop();
+                    var options = me.globalDrilldownStack.pop();
+                    if (typeof options === 'undefined') {
+                        me.backButton.hidden = true;
+                        me.chartDiv2.hidden = true;
+                        titleDiv.hidden = true;
+                        me.chartData(me.fullGroupBy,me.chartDiv,0);
+                    } else {
+                        me.backButton.hidden = false;
+                        me.chartDiv2.hidden = false;
+                        titleDiv.hidden = false;
+                        me.createDrillDownGraph(options);
+                    }
                 }
-            });
+    
+                me.backButton.addEventListener('click', me.listener1, true);
+            }
+
         });
     });
   }
@@ -290,7 +295,7 @@ createDrillDownGraph(options) {
         var lastOptions = me.globalDrilldownStack[me.globalDrilldownStack.length-1];
 
         // Don't push on the stack if it is the exact same thing.
-        if (lastOptions != options) {
+        if (typeof lastOptions == 'undefined' || lastOptions.path != options.path) {
             me.globalDrilldownStack.push(options);
         }
     
@@ -733,8 +738,7 @@ addChartListeners() {
         type: Object
       },
       groupby: {
-        type: String,
-        hasChanged: this._groupbyHasChanged
+        type: String
       },
       localfilter: {
         type: String
