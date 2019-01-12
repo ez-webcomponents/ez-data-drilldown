@@ -1,13 +1,13 @@
 {
   "name": "@ez-webcomponents/ez-data-drilldown",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A drilldown charting widget that drills down into the data based on the 'groupby' attribute ",
   "main": "index.js",
   "repository": "git+https://github.com/ez-webcomponents/ez-data-drilldown.git",
   "author": "Martin Israelsen",
   "license": "MIT",
   "dependencies": {
-    "@ez-webcomponents/ez-groupby-tree-mixin": "^1.0.3",
+    "@ez-webcomponents/ez-groupby-tree-mixin": "^1.0.4",
     "@lrnwebcomponents/paper-lightbox": "^0.0.31",
     "@polymer/lit-element": "^0.6.5",
     "@polymer/paper-button": "^3.0.1",

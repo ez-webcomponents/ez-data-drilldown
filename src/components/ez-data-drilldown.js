@@ -694,6 +694,7 @@ addChartListeners() {
     });
  }
 
+
 /**
    * @function applyFilter()
    * @author Martin Israelsen <martin.israelsen@gmail.com>

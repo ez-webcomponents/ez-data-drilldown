@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@ez-webcomponents/ez-groupby-tree-mixin@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@ez-webcomponents/ez-groupby-tree-mixin/-/ez-groupby-tree-mixin-1.0.3.tgz#27cd60fb6a6f16bff1ac23475add9f34695e3c26"
+"@ez-webcomponents/ez-groupby-tree-mixin@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@ez-webcomponents/ez-groupby-tree-mixin/-/ez-groupby-tree-mixin-1.0.4.tgz#1e1f2df38181a3ccc3f9223fba944effead2f03c"
   dependencies:
     "@polymer/lit-element" "0.6.1"
     "@polymer/polymer" "^3.0.0-pre.13"
