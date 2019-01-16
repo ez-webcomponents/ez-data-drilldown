@@ -5,7 +5,7 @@ This program is available under MIT license, available at
   https://github.com/ez-webcomponents/ez-data-drilldown
 */
 
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 import '@polymer/paper-card/paper-card.js';
 import '@polymer/paper-dialog/paper-dialog.js';
 import '@polymer/paper-item/paper-item.js';

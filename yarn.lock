@@ -190,11 +190,11 @@
     "@polymer/iron-meta" "^3.0.0-pre.26"
     "@polymer/polymer" "^3.0.0"
 
-"@polymer/lit-element@0.6.1", "@polymer/lit-element@0.6.5", "@polymer/lit-element@^0.6.5":
-  version "0.6.5"
-  resolved "https://registry.yarnpkg.com/@polymer/lit-element/-/lit-element-0.6.5.tgz#c614b9638a0809883ba52bf43fca5b6ed51b7aa8"
+"@polymer/lit-element@0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@polymer/lit-element/-/lit-element-0.6.1.tgz#56772f8fb0c6d3d73a20a6d17f3bc82ec648664b"
   dependencies:
-    lit-html "^1.0.0-rc.1"
+    lit-html "^0.11.4"
 
 "@polymer/marked-element@^3.0.0-pre.25":
   version "3.0.1"
@@ -256,8 +256,8 @@
     "@polymer/polymer" "^3.0.0"
 
 "@polymer/paper-icon-button@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@polymer/paper-icon-button/-/paper-icon-button-3.0.1.tgz#4af7129c82de9d4a0ad59d43e1d3d8ec93414fbf"
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@polymer/paper-icon-button/-/paper-icon-button-3.0.2.tgz#a1254faadc2c8dd135ce1ae33bcc161a94c31f65"
   dependencies:
     "@polymer/iron-icon" "^3.0.0-pre.26"
     "@polymer/paper-behaviors" "^3.0.0-pre.27"
@@ -323,6 +323,10 @@
   dependencies:
     "@polymer/polymer" "^3.0.0"
     prismjs "^1.11.0"
+
+"@sgratzl/science@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@sgratzl/science/-/science-2.0.0.tgz#9154f6f5d55c5712f48887c25492a4dc7bc6cc99"
 
 "@vaadin/vaadin-context-menu@^4.2.1":
   version "4.2.1"
@@ -390,8 +394,8 @@
     "@polymer/polymer" "^3.0.0"
 
 "@vaadin/vaadin-overlay@^3.2.0":
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-overlay/-/vaadin-overlay-3.2.4.tgz#fc8cb456ae9e5d5a009aec9deed4e3c1994fcd9e"
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-overlay/-/vaadin-overlay-3.2.5.tgz#27e96fa4dc35a2bcf3ff01d44cb4f235553d423f"
   dependencies:
     "@polymer/polymer" "^3.0.0"
     "@vaadin/vaadin-lumo-styles" "^1.3.0"
@@ -415,10 +419,10 @@
   resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.8.0.tgz#10340b87626f876841033b21b5221c3701252e10"
 
 "@webcomponents/webcomponentsjs@^2.0.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.2.2.tgz#48ad750ea3d96266322cc462f30f46a822c20303"
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.2.3.tgz#1db73557e44df927ee5458c63b56f4a75183ca09"
 
-chart.js@^2.7.2, chart.js@^2.7.3:
+chart.js@^2.7.3:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-2.7.3.tgz#cdb61618830bf216dc887e2f7b1b3c228b73c57e"
   dependencies:
@@ -426,12 +430,11 @@ chart.js@^2.7.2, chart.js@^2.7.3:
     moment "^2.10.2"
 
 chartjs-chart-box-and-violin-plot@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/chartjs-chart-box-and-violin-plot/-/chartjs-chart-box-and-violin-plot-1.1.2.tgz#8d2c9d9c59bfea445b83484513f60934febda60e"
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/chartjs-chart-box-and-violin-plot/-/chartjs-chart-box-and-violin-plot-1.2.0.tgz#8beab3eac03c6b83d1c8bb7f3f77ee9ef4984630"
   dependencies:
-    chart.js "^2.7.2"
-    d3-array "^1.2.1"
-    science "github:sgratzl/science.js"
+    "@sgratzl/science" "^2.0.0"
+    chart.js "^2.7.3"
 
 chartjs-color-string@^0.5.0:
   version "0.5.0"
@@ -470,10 +473,6 @@ color-name@^1.0.0:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
 
-d3-array@^1.2.1:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-1.2.4.tgz#635ce4d5eea759f6f605863dbcfc30edc737f71f"
-
 delegate@^3.1.2:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/delegate/-/delegate-3.2.0.tgz#b66b71c3158522e8ab5744f720d8ca0c2af59166"
@@ -496,7 +495,13 @@ jquery@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
-lit-html@1.0.0-rc.1, lit-html@^0.11.4, lit-html@^1.0.0-rc.1:
+lit-element@^2.0.0-rc.2:
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/lit-element/-/lit-element-2.0.0-rc.2.tgz#5975c3b282ce47937de861b48456036df71f422b"
+  dependencies:
+    lit-html "^1.0.0-rc.2"
+
+lit-html@1.0.0-rc.1, lit-html@^0.11.4, lit-html@^1.0.0-rc.2:
   version "1.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-1.0.0-rc.1.tgz#a83d45ed86fc7c5d4612f3092e83fd095baf1fc3"
 
@@ -521,10 +526,6 @@ prismjs@^1.11.0:
   resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.15.0.tgz#8801d332e472091ba8def94976c8877ad60398d9"
   optionalDependencies:
     clipboard "^2.0.0"
-
-"science@github:sgratzl/science.js":
-  version "2.0.0"
-  resolved "https://codeload.github.com/sgratzl/science.js/tar.gz/509db97378f2a4bf23a85c76c6a4c006caf4bc60"
 
 select@^1.1.2:
   version "1.1.2"
