@@ -75,6 +75,24 @@ export class EzDataDrilldown extends EzGroupbyTreeMixin(LitElement) {
             }
 
             try {
+                if (typeof me.backgroundcolors != 'undefined' && me.backgroundcolors.length > 0) {
+                    me.backgroundColors = JSON.parse(me.backgroundcolors);
+                }
+            } catch (e) {
+                alert("Sorry could not parse 'colors' attribute -- Please check your JSON formatting.");
+                return;
+            }
+
+            try {
+                if (typeof me.bordercolors != 'undefined' && me.bordercolors.length > 0) {
+                    me.borderColors = JSON.parse(me.bordercolors);
+                }
+            } catch (e) {
+                alert("Sorry could not parse 'colors' attribute -- Please check your JSON formatting.");
+                return;
+            }
+
+            try {
                 me.localFilter = JSON.parse(me.localfilter);
             } catch (e) {
                 alert("Sorry could not parse 'localfilter' attribute -- Please check your JSON formatting.");
@@ -215,6 +233,14 @@ export class EzDataDrilldown extends EzGroupbyTreeMixin(LitElement) {
             }
         }
     };
+
+    if (typeof this.backgroundColors != 'undefined') {
+        mainChartConfig.data.datasets[0].backgroundColor = this.backgroundColors;
+    }
+
+    if (typeof this.borderColors != 'undefined') {
+        mainChartConfig.data.datasets[0].borderColor = this.borderColors;
+    }
 
     return mainChartConfig;
 }
@@ -744,6 +770,12 @@ addChartListeners() {
       localfilter: {
         type: String
       },
+      backgroundcolors: {
+        type: String
+      },
+      bordercolors: {
+        type: String
+      },
       maxcharts: {
         type: Number
       },
@@ -780,7 +812,7 @@ addChartListeners() {
     // Must call super.update() or nothing will render.
     super.update(changedProperties);
     if (changedProperties.get('groupby') || changedProperties.get('url') || changedProperties.get('title')
-        || changedProperties.get('maxcharts') || changedProperties.get('localfilter')) {
+        || changedProperties.get('maxcharts') || changedProperties.get('localfilter') || changedProperties.get('colors')) {
             this.dispatchEvent(new CustomEvent('rendered')); 
         return true;
     }

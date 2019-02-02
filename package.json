@@ -1,6 +1,6 @@
 {
   "name": "@ez-webcomponents/ez-data-drilldown",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A drilldown charting widget that drills down into the data based on the 'groupby' attribute ",
   "main": "index.js",
   "repository": "git+https://github.com/ez-webcomponents/ez-data-drilldown.git",
