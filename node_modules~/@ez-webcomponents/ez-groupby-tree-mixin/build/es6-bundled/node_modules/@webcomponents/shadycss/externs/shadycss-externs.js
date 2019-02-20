@@ -1,0 +1,1 @@
+let ShadyCSSInterface,ShadyCSSOptions;window.ShadyCSS;

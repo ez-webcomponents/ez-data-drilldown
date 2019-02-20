@@ -219,9 +219,16 @@ export class EzDataDrilldown extends EzGroupbyTreeMixin(LitElement) {
                         } else {
                             return "";
                         }
-
                     }
                 }
+            },
+            scales: {
+                xAxes: [{stacked: false}],
+                yAxes: [{stacked: false,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
             },
             legend: {
                 display: false,
@@ -281,22 +288,59 @@ createDrillDownGraph(options) {
 
     options.group.chartConfig = {};
     options.group.chartConfig = cloneDeep(me.getMainChartConfig());
-    //console.log("CONFIG",options.group.chartConfig);
-    options.group.chartConfig.type = options.drilldown[0].chart;
-    if (options.drilldown[0].chart== 'pie') {
-        options.group.chartConfig.plugins = [ChartDataLabels];
-    }
 
     for (var k in options.drilldown) {
-        if (typeof options.group.chartConfig.data.datasets[0].data !== 'undefined') {
-            options.group.chartConfig.data.datasets[0].data.push(options.drilldown[k].y);
-            options.group.chartConfig.data.datasets[0].meta1.push(options.drilldown[k]);
-            options.group.chartConfig.data.labels.push(options.drilldown[k].name);
+
+        // First, Push on the labels on the x-axis
+        options.group.chartConfig.data.labels.push(options.drilldown[k].name);
+            
+        for (var i=0,j=0; i<options.drilldown[k].group.datasets.length; i++,j++) {
+            var onlyOneDataset = 0;
+            if (options.drilldown[k].group.datasets.length == 1) { var onlyOneDataset = true }
+
+            if (onlyOneDataset) {
+                options.group.chartConfig.options.legend.display = false;
+            } else {
+                options.group.chartConfig.options.legend.display = true;
+            }
+
+            if (options.drilldown[k].group.datasets[i].type == 'stackedbar') {
+                options.group.chartConfig.type = 'bar';
+                options.drilldown[k].group.datasets[i].type_tmp = "bar";
+                options.group.chartConfig.options.scales.xAxes[0].stacked = true;
+                options.group.chartConfig.options.scales.yAxes[0].stacked = true;
+            } else {
+                options.group.chartConfig.type = options.drilldown[k].group.datasets[i].type;
+                options.drilldown[k].group.datasets[i].type_tmp = options.drilldown[k].group.datasets[i].type;
+            }
+
+
+            options.drilldown[k].group.chartConfig.type = options.drilldown[k].group.datasets[i].type;
+            if (options.drilldown[k].group.chartConfig.type == 'pie') {
+                options.group.chartConfig.plugins = [ChartDataLabels];
+            }
+            if (typeof options.group.chartConfig.data.datasets[i] !== 'undefined') {
+                options.group.chartConfig.data.datasets[i].data.push(options.drilldown[k].y[j]);
+                options.group.chartConfig.data.datasets[i].meta1.push(options.drilldown[k]);
+                options.group.chartConfig.data.datasets[i].type = options.drilldown[k].group.datasets[i].type_tmp;
+                if (!onlyOneDataset) {
+                    options.group.chartConfig.data.datasets[i].label = options.drilldown[k].group.datasets[i].label;
+                    options.group.chartConfig.data.datasets[i].backgroundColor = options.drilldown[k].group.datasets[i].backgroundcolor;
+                    options.group.chartConfig.data.datasets[i].borderColor = options.drilldown[k].group.datasets[i].bordercolor;
+                }
+            } else {
+                options.group.chartConfig.data.datasets[i] = {data:[],meta1:[],label:''};
+                options.group.chartConfig.data.datasets[i].data.push(options.drilldown[k].y[j]);
+                options.group.chartConfig.data.datasets[i].type = options.drilldown[k].group.datasets[i].type_tmp;
+                if (!onlyOneDataset) {
+                    options.group.chartConfig.data.datasets[i].label = options.drilldown[k].group.datasets[i].label;
+                    options.group.chartConfig.data.datasets[i].backgroundColor = options.drilldown[k].group.datasets[i].backgroundcolor;
+                    options.group.chartConfig.data.datasets[i].borderColor = options.drilldown[k].group.datasets[i].bordercolor;
+                }
+            } 
         }
+
     }
-    // TODO: Need to figure out how to insert in alphabetical order for both labels, meta1, and data. 
-    //options.group.chartConfig.data.labels.sort(); 
-    //options.group.chartConfig.data.datasets[0].meta1.data.labels.sort();
 
     if (options.group != options.groups[options.groups.length-1]) {
         // Fill in chart type from 'groupby' attribute that was passed in.
@@ -346,31 +390,62 @@ createDrillDownGraph(options) {
   clearChartData(me, series, obj, color) {
     for (var k in obj) {
         if (typeof obj[k].drilldown !== 'undefined') {
-            if (obj[k].drilldown.length > 0) {
-                var brightness = 0.1 - (k) / 5;
-                //obj[k].color = Highcharts.Color(me.colors[color]).brighten(brightness).get();
-                obj[k].group.chartConfig = {};
-                obj[k].group.chartConfig = Object.assign({},me.mainChartConfig);
-                obj[k].group.chartConfig.type = obj[k].group.chart;
+            if (obj[k].group.datasets.length == 1) {
+                if (obj[k].drilldown.length > 0) {
+                    var brightness = 0.1 - (k) / 5;
+                    //obj[k].color = Highcharts.Color(me.colors[color]).brighten(brightness).get();
+                    obj[k].group.chartConfig = {};
+                    obj[k].group.chartConfig = Object.assign({},me.mainChartConfig);
+                    obj[k].group.chartConfig.type = obj[k].group.datasets[0].type;
 
-                if (typeof obj[k].group.chartConfig.data.datasets[series] !== 'undefined') {
-                    obj[k].group.chartConfig.data.datasets[series].data.length = 0;
-                    obj[k].group.chartConfig.data.datasets[series].meta1.length = 0;
-                    obj[k].group.chartConfig.data.labels.length = 0;
-                } 
-                color++;                
-                me.clearChartData(me,series+1,obj[k].drilldown, color);
-
+                    if (typeof obj[k].group.chartConfig.data.datasets[series] !== 'undefined') {
+                        obj[k].group.chartConfig.data.datasets[series].data.length = 0;
+                        obj[k].group.chartConfig.data.datasets[series].meta1.length = 0;
+                        obj[k].group.chartConfig.data.labels.length = 0;
+                    } 
+                    color++;                
+                    me.clearChartData(me,series+1,obj[k].drilldown, color);
+                } else {
+                    if (obj[k].group.datasets.length == 1) {
+                        var brightness = 0.1 - (k) / 5;
+                        obj[k].group.chartConfig = {};
+                        obj[k].group.chartConfig = Object.assign({},me.mainChartConfig);
+                        obj[k].group.chartConfig.type = obj[k].group.datasets[0].type;
+                        if (typeof obj[k].group.chartConfig.data.datasets[series] !== 'undefined') {
+                            obj[k].group.chartConfig.data.datasets[series].data.length = 0;
+                            obj[k].group.chartConfig.data.datasets[series].meta1.length = 0;
+                            obj[k].group.chartConfig.data.labels.length = 0;
+                        } 
+                    }
+                }
             } else {
-                var brightness = 0.1 - (k) / 5;
-                obj[k].group.chartConfig = {};
-                obj[k].group.chartConfig = Object.assign({},me.mainChartConfig);
-                obj[k].group.chartConfig.type = obj[k].group.chart;
-                if (typeof obj[k].group.chartConfig.data.datasets[series] !== 'undefined') {
-                    obj[k].group.chartConfig.data.datasets[series].data.length = 0;
-                    obj[k].group.chartConfig.data.datasets[series].meta1.length = 0;
-                    obj[k].group.chartConfig.data.labels.length = 0;
-                } 
+                if (obj[k].drilldown.length > 0) {
+                    var brightness = 0.1 - (k) / 5;
+                    //obj[k].color = Highcharts.Color(me.colors[color]).brighten(brightness).get();
+                    obj[k].group.chartConfig = {};
+                    obj[k].group.chartConfig = Object.assign({},me.mainChartConfig);
+                    obj[k].group.chartConfig.type = obj[k].group.datasets[0].type;
+
+                    if (typeof obj[k].group.chartConfig.data.datasets[series] !== 'undefined') {
+                        obj[k].group.chartConfig.data.datasets[series].data.length = 0;
+                        obj[k].group.chartConfig.data.datasets[series].meta1.length = 0;
+                        obj[k].group.chartConfig.data.labels.length = 0;
+                    } 
+                    color++;                
+                    me.clearChartData(me,series+1,obj[k].drilldown, color);
+                } else {
+                    if (obj[k].group.datasets.length == 1) {
+                        var brightness = 0.1 - (k) / 5;
+                        obj[k].group.chartConfig = {};
+                        obj[k].group.chartConfig = Object.assign({},me.mainChartConfig);
+                        obj[k].group.chartConfig.type = obj[k].group.datasets[0].type;
+                        if (typeof obj[k].group.chartConfig.data.datasets[series] !== 'undefined') {
+                            obj[k].group.chartConfig.data.datasets[series].data.length = 0;
+                            obj[k].group.chartConfig.data.datasets[series].meta1.length = 0;
+                            obj[k].group.chartConfig.data.labels.length = 0;
+                        } 
+                    }
+                }                
             }
         }
     }
@@ -389,41 +464,85 @@ createDrillDownGraph(options) {
    */
 populateChartData(me, series, obj, color) {
     for (var k in obj) {
-        if (typeof obj[k].drilldown !== 'undefined') {
-            if (obj[k].drilldown.length > 0) {
-                var brightness = 0.1 - (k) / 5;
-                //obj[k].color = Highcharts.Color(me.colors[color]).brighten(brightness).get();
-                obj[k].group.chartConfig = {};
-                obj[k].group.chartConfig = Object.assign({},me.mainChartConfig);
-                obj[k].group.chartConfig.type = obj[k].group.chart;
-                if (obj[k].group.chart == 'pie') {
-                    obj[k].group.chartConfig.plugins = [ChartDataLabels];
-                }
+        if (typeof obj[k].drilldown !== 'undefined' && obj[k].group.datasets.length != 0) {
+            if (obj[k].group.datasets.length == 1) {
+                if (obj[k].drilldown.length > 0) {
+                    var brightness = 0.1 - (k) / 5;
+                    obj[k].group.chartConfig = {};
+                    obj[k].group.chartConfig = Object.assign({},me.mainChartConfig);
+                    if (obj[k].group.datasets[0].type == 'stackedbar') {
+                        obj[k].group.chartConfig.type = 'bar';
+                        obj[k].group.chartConfig.data.datasets[0].type = "bar";
+                        obj[k].group.chartConfig.options.scales.xAxes[0].stacked = true;
+                        obj[k].group.chartConfig.options.scales.yAxes[0].stacked = true;
+                    } else {
+                        obj[k].group.chartConfig.type = obj[k].group.datasets[0].type;
+                    }
 
-                if (typeof obj[k].group.chartConfig.data.datasets[series] !== 'undefined') {
-                    obj[k].group.chartConfig.data.datasets[series].data.push(obj[k].y);
-                    obj[k].group.chartConfig.data.datasets[series].meta1.push(obj[k]);
-                    obj[k].group.chartConfig.data.datasets[series].allData = me.data;
-                    obj[k].group.chartConfig.data.datasets[series].downloadObj = me.downloadFields;
-                    obj[k].group.chartConfig.data.datasets[series].label = obj[k].name;
-                    obj[k].group.chartConfig.data.labels.push(obj[k].name);
+                    if (obj[k].group.chartConfig.type == 'pie') {
+                        obj[k].group.chartConfig.plugins = [ChartDataLabels];
+                    }
+    
+                    if (typeof obj[k].group.chartConfig.data.datasets[0] !== 'undefined') {
+                        obj[k].group.chartConfig.data.datasets[0].data.push(obj[k].y[0]);
+                        obj[k].group.chartConfig.data.datasets[0].meta1.push(obj[k]);
+                        obj[k].group.chartConfig.data.datasets[0].allData = me.data;
+                        obj[k].group.chartConfig.data.datasets[0].downloadObj = me.downloadFields;
+                        obj[k].group.chartConfig.data.labels.push(obj[k].name);
+                    } 
+                    color++;                
                 } 
-                color++;                
-                me.populateChartData(me,series+1,obj[k].drilldown, color);
 
             } else {
-                var brightness = 0.1 - (k) / 5;
-                obj[k].group.chartConfig = {};
-                obj[k].group.chartConfig = Object.assign({},me.mainChartConfig);
-                obj[k].group.chartConfig.type = obj[k].group.chart;
-                if (obj[k].group.chart == 'pie') {
-                    obj[k].group.chartConfig.plugins = [ChartDataLabels];
-                }
-                if (typeof obj[k].group.chartConfig.data.datasets[series] !== 'undefined') {
-                    obj[k].group.chartConfig.data.datasets[series].meta1.push(obj[k]);
-                    obj[k].group.chartConfig.data.datasets[series].data.push(obj[k].y);
-                    obj[k].group.chartConfig.data.datasets[series].label = obj[k].name;
+
+                if (obj[k].drilldown.length > 0) {
+                    var brightness = 0.1 - (k) / 5;
+                    obj[k].group.chartConfig = {};
+                    obj[k].group.chartConfig = Object.assign({},me.mainChartConfig);
                     obj[k].group.chartConfig.data.labels.push(obj[k].name);
+                    obj[k].group.chartConfig.options.legend.display = true;
+
+                    // Multiple datasets:  Loop over each dataset and fill in chartConfig accordingly.
+                    for (var i=0,j=0; i<obj[k].group.datasets.length; i++,j++) {
+
+                        if (obj[k].group.datasets[i].type == 'stackedbar') {
+                            obj[k].group.chartConfig.type = 'bar';
+                            obj[k].group.datasets[i].type = "bar";
+                            obj[k].group.chartConfig.options.scales.xAxes[0].stacked = true;
+                            obj[k].group.chartConfig.options.scales.yAxes[0].stacked = true;
+                        } else {
+                            obj[k].group.chartConfig.type = obj[k].group.datasets[i].type;
+                        }
+
+        
+                        if (typeof obj[k].group.chartConfig.data.datasets[i] !== 'undefined') {
+                            obj[k].group.chartConfig.data.datasets[i].data.push(obj[k].y[j]);
+                            obj[k].group.chartConfig.data.datasets[i].meta1.push(obj[k]);
+                            obj[k].group.chartConfig.data.datasets[i].allData = me.data;
+                            obj[k].group.chartConfig.data.datasets[i].downloadObj = me.downloadFields;
+                            obj[k].group.chartConfig.data.datasets[i].label = obj[k].group.datasets[i].label;
+                            obj[k].group.chartConfig.data.datasets[i].type = obj[k].group.datasets[i].type;
+                            obj[k].group.chartConfig.data.datasets[i].backgroundColor = obj[k].group.datasets[i].backgroundcolor;
+                            obj[k].group.chartConfig.data.datasets[i].borderColor = obj[k].group.datasets[i].bordercolor;
+                            if (obj[k].group.datasets[i].type == 'pie') {
+                                obj[k].group.chartConfig.plugins = [ChartDataLabels];
+                            }
+                        } else {
+                            obj[k].group.chartConfig.data.datasets[i] = {data:[],meta1:[],label:''};
+                            obj[k].group.chartConfig.data.datasets[i].data.push(obj[k].y[j]);
+                            obj[k].group.chartConfig.data.datasets[i].meta1.push(obj[k]);
+                            obj[k].group.chartConfig.data.datasets[i].allData = me.data;
+                            obj[k].group.chartConfig.data.datasets[i].downloadObj = me.downloadFields;
+                            obj[k].group.chartConfig.data.datasets[i].label = obj[k].group.datasets[i].label;
+                            obj[k].group.chartConfig.data.datasets[i].type = obj[k].group.datasets[i].type;
+                            obj[k].group.chartConfig.data.datasets[i].backgroundColor = obj[k].group.datasets[i].backgroundcolor;
+                            obj[k].group.chartConfig.data.datasets[i].borderColor = obj[k].group.datasets[i].bordercolor;
+                            if (obj[k].group.datasets[i].type == 'pie') {
+                                obj[k].group.chartConfig.plugins = [ChartDataLabels];
+                            }
+                        }
+                        color++; 
+                    }            
                 } 
             }
         }
@@ -569,7 +688,7 @@ addMenu(meta,menuItem) {
     item.style="min-height: unset; margin-bottom: unset; margin-top: unset; padding: 2px;";
 
     const UrlTemplate = new UriTemplate(menuItem.url);
-    menuItem.url = UrlTemplate.expand(meta.data[0]);
+    menuItem.url_tmp = UrlTemplate.expand(meta.data[0]);
 
     if (/^csv$/.test(menuItem.url)) {
         //var a = $("<paper-button><iron-icon icon='cloud-download'></iron-icon>&nbsp;"+menuItem.name+"</paper-button>");
@@ -580,7 +699,7 @@ addMenu(meta,menuItem) {
     } else {
         if (menuItem.target === "modal") {
             //var a = $("<paper-button><iron-icon icon='flip-to-front'></iron-icon>&nbsp;"+menuItem.name+"</paper-button>");
-            var a = $("<a href='"+menuItem.url+"' class='iframe-lightbox-link' data-scrolling='true'><iron-icon icon='flip-to-front'></iron-icon>"+menuItem.name+"</a>");
+            var a = $("<a href='"+menuItem.url_tmp+"' class='iframe-lightbox-link' data-scrolling='true'><iron-icon icon='flip-to-front'></iron-icon>"+menuItem.name+"</a>");
             a[0].lightbox = new IframeLightbox(a[0]);
         } else if (menuItem.target === "event") {
             var a = $("<a href='javascript:;'>"+menuItem.name+"</a>");
@@ -598,7 +717,7 @@ addMenu(meta,menuItem) {
             });
         } else {
             //var a = $("<paper-button><iron-icon icon='content-copy'></iron-icon>&nbsp;"+menuItem.name+"</paper-button>");
-            var a = $("<a target='"+menuItem.target+"' href='"+menuItem.url+"'><iron-icon icon='content-copy'></iron-icon>"+menuItem.name+"</a>");
+            var a = $("<a target='"+menuItem.target+"' href='"+menuItem.url_tmp+"'><iron-icon icon='content-copy'></iron-icon>"+menuItem.name+"</a>");
         }
 
     }

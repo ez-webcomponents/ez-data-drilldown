@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@ez-webcomponents/ez-groupby-tree-mixin@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@ez-webcomponents/ez-groupby-tree-mixin/-/ez-groupby-tree-mixin-1.0.4.tgz#1e1f2df38181a3ccc3f9223fba944effead2f03c"
+"@ez-webcomponents/ez-groupby-tree-mixin@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@ez-webcomponents/ez-groupby-tree-mixin/-/ez-groupby-tree-mixin-2.0.0.tgz#beb0bdc61b23fe173b3d5b8c083d847ffce68ba7"
   dependencies:
     "@polymer/lit-element" "0.6.1"
     "@polymer/polymer" "^3.0.0-pre.13"
@@ -99,7 +99,7 @@
   dependencies:
     "@polymer/polymer" "^3.0.0"
 
-"@polymer/iron-icon@3.0.0-pre.21", "@polymer/iron-icon@^3.0.0-pre.18", "@polymer/iron-icon@^3.0.0-pre.26", "@polymer/iron-icon@^3.0.1":
+"@polymer/iron-icon@3.0.0-pre.21", "@polymer/iron-icon@^3.0.0", "@polymer/iron-icon@^3.0.0-pre.21", "@polymer/iron-icon@^3.0.0-pre.26":
   version "3.0.0-pre.21"
   resolved "https://registry.yarnpkg.com/@polymer/iron-icon/-/iron-icon-3.0.0-pre.21.tgz#5ef3e483f02823778e99c1b5e16ddac472b5dce5"
   dependencies:
@@ -115,7 +115,7 @@
     "@polymer/iron-iconset-svg" "^3.0.0-pre.26"
     "@polymer/polymer" "^3.0.0"
 
-"@polymer/iron-iconset-svg@3.0.0-pre.21", "@polymer/iron-iconset-svg@^3.0.0-pre.18", "@polymer/iron-iconset-svg@^3.0.0-pre.26":
+"@polymer/iron-iconset-svg@3.0.0-pre.21", "@polymer/iron-iconset-svg@^3.0.0", "@polymer/iron-iconset-svg@^3.0.0-pre.26":
   version "3.0.0-pre.21"
   resolved "https://registry.yarnpkg.com/@polymer/iron-iconset-svg/-/iron-iconset-svg-3.0.0-pre.21.tgz#1248f341837789801a9000cdd3b3453b59f91021"
   dependencies:
@@ -142,7 +142,7 @@
   dependencies:
     "@polymer/polymer" "^3.0.0"
 
-"@polymer/iron-media-query@^3.0.0-pre.18":
+"@polymer/iron-media-query@^3.0.0":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@polymer/iron-media-query/-/iron-media-query-3.0.1.tgz#5cd8a1c1e8c9b8bafd3dd5da14e0f8d2cfa76d83"
   dependencies:
@@ -329,15 +329,17 @@
   resolved "https://registry.yarnpkg.com/@sgratzl/science/-/science-2.0.0.tgz#9154f6f5d55c5712f48887c25492a4dc7bc6cc99"
 
 "@vaadin/vaadin-context-menu@^4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-context-menu/-/vaadin-context-menu-4.2.1.tgz#ab94d2b99a4fc1c9ed964d1be1728856f6867679"
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-context-menu/-/vaadin-context-menu-4.3.1.tgz#16691a6eabe8a223ce431e55ce3f0c46876adea7"
   dependencies:
-    "@polymer/iron-media-query" "^3.0.0-pre.18"
+    "@polymer/iron-media-query" "^3.0.0"
     "@polymer/polymer" "^3.0.0"
     "@vaadin/vaadin-element-mixin" "^2.1.1"
+    "@vaadin/vaadin-item" "^2.1.0"
+    "@vaadin/vaadin-list-box" "^1.1.0"
     "@vaadin/vaadin-lumo-styles" "^1.1.1"
     "@vaadin/vaadin-material-styles" "^1.1.1"
-    "@vaadin/vaadin-overlay" "^3.2.0"
+    "@vaadin/vaadin-overlay" "^3.2.9"
     "@vaadin/vaadin-themable-mixin" "^1.3.2"
 
 "@vaadin/vaadin-development-mode-detector@^2.0.0":
@@ -345,12 +347,12 @@
   resolved "https://registry.yarnpkg.com/@vaadin/vaadin-development-mode-detector/-/vaadin-development-mode-detector-2.0.0.tgz#69417cbf4a9f7427ec7b70b7dc8e0605a2f900b3"
 
 "@vaadin/vaadin-element-mixin@^2.0.0", "@vaadin/vaadin-element-mixin@^2.1.1":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-element-mixin/-/vaadin-element-mixin-2.1.2.tgz#f34421cc81e6aa3fdf688f0ba26f4a6ae030ad5e"
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-element-mixin/-/vaadin-element-mixin-2.1.3.tgz#3d7e835501afecba1c5b4400ef35e3d9459b2693"
   dependencies:
     "@polymer/polymer" "^3.0.0"
     "@vaadin/vaadin-development-mode-detector" "^2.0.0"
-    "@vaadin/vaadin-usage-statistics" "^2.0.1"
+    "@vaadin/vaadin-usage-statistics" "^2.0.2"
 
 "@vaadin/vaadin-item@^2.1.0":
   version "2.1.0"
@@ -380,11 +382,11 @@
     "@polymer/polymer" "^3.0.0"
 
 "@vaadin/vaadin-lumo-styles@^1.1.0", "@vaadin/vaadin-lumo-styles@^1.1.1", "@vaadin/vaadin-lumo-styles@^1.3.0":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-lumo-styles/-/vaadin-lumo-styles-1.3.3.tgz#cdf8bd3b759eff63513e68d51c7f9782a433c0e0"
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-lumo-styles/-/vaadin-lumo-styles-1.4.1.tgz#75b79e9d2664aefae7f5040562bffe5d8fc6508c"
   dependencies:
-    "@polymer/iron-icon" "^3.0.0-pre.18"
-    "@polymer/iron-iconset-svg" "^3.0.0-pre.18"
+    "@polymer/iron-icon" "^3.0.0"
+    "@polymer/iron-iconset-svg" "^3.0.0"
     "@polymer/polymer" "^3.0.0"
 
 "@vaadin/vaadin-material-styles@^1.1.0", "@vaadin/vaadin-material-styles@^1.1.1", "@vaadin/vaadin-material-styles@^1.2.0":
@@ -393,9 +395,9 @@
   dependencies:
     "@polymer/polymer" "^3.0.0"
 
-"@vaadin/vaadin-overlay@^3.2.0":
-  version "3.2.5"
-  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-overlay/-/vaadin-overlay-3.2.5.tgz#27e96fa4dc35a2bcf3ff01d44cb4f235553d423f"
+"@vaadin/vaadin-overlay@^3.2.9":
+  version "3.2.9"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-overlay/-/vaadin-overlay-3.2.9.tgz#e0b242d9cebf33f829f2df1a2e7ba938df7ed8e4"
   dependencies:
     "@polymer/polymer" "^3.0.0"
     "@vaadin/vaadin-lumo-styles" "^1.3.0"
@@ -403,24 +405,24 @@
     "@vaadin/vaadin-themable-mixin" "^1.2.1"
 
 "@vaadin/vaadin-themable-mixin@^1.2.1", "@vaadin/vaadin-themable-mixin@^1.3.2":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-themable-mixin/-/vaadin-themable-mixin-1.4.0.tgz#c653a7395d31f18dc878a57c5d3467505b759a37"
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-themable-mixin/-/vaadin-themable-mixin-1.4.1.tgz#089e28729022138f1519cd9ee72d881d259a9de1"
   dependencies:
     "@polymer/polymer" "^3.0.0"
 
-"@vaadin/vaadin-usage-statistics@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-usage-statistics/-/vaadin-usage-statistics-2.0.1.tgz#277e880c901521f8b763ed0f16ca6900ac6a9f43"
+"@vaadin/vaadin-usage-statistics@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-usage-statistics/-/vaadin-usage-statistics-2.0.2.tgz#7034b673e396efba174a590846d057025f601120"
   dependencies:
     "@vaadin/vaadin-development-mode-detector" "^2.0.0"
 
 "@webcomponents/shadycss@^1.2.0", "@webcomponents/shadycss@^1.5.2":
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.8.0.tgz#10340b87626f876841033b21b5221c3701252e10"
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.9.0.tgz#8450465037370d4f5c32e801bb2554a7cf2f5037"
 
 "@webcomponents/webcomponentsjs@^2.0.2":
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.2.3.tgz#1db73557e44df927ee5458c63b56f4a75183ca09"
+  version "2.2.7"
+  resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.2.7.tgz#1f1a7a7aa083db5ae6aadaeda68caa8fd8657462"
 
 chart.js@^2.7.3:
   version "2.7.3"
@@ -430,8 +432,8 @@ chart.js@^2.7.3:
     moment "^2.10.2"
 
 chartjs-chart-box-and-violin-plot@^1.1.2:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/chartjs-chart-box-and-violin-plot/-/chartjs-chart-box-and-violin-plot-1.2.0.tgz#8beab3eac03c6b83d1c8bb7f3f77ee9ef4984630"
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/chartjs-chart-box-and-violin-plot/-/chartjs-chart-box-and-violin-plot-1.3.0.tgz#5fb6a764f52b58291d473e084ca7844bfe824c13"
   dependencies:
     "@sgratzl/science" "^2.0.0"
     chart.js "^2.7.3"
@@ -496,12 +498,12 @@ jquery@^3.3.1:
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
 lit-element@^2.0.0-rc.2:
-  version "2.0.0-rc.2"
-  resolved "https://registry.yarnpkg.com/lit-element/-/lit-element-2.0.0-rc.2.tgz#5975c3b282ce47937de861b48456036df71f422b"
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/lit-element/-/lit-element-2.0.1.tgz#9ec5871d3b64487f432c7c071df80ef031d7091b"
   dependencies:
-    lit-html "^1.0.0-rc.2"
+    lit-html "^1.0.0"
 
-lit-html@1.0.0-rc.1, lit-html@^0.11.4, lit-html@^1.0.0-rc.2:
+lit-html@1.0.0-rc.1, lit-html@^0.11.4, lit-html@^1.0.0:
   version "1.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-1.0.0-rc.1.tgz#a83d45ed86fc7c5d4612f3092e83fd095baf1fc3"
 
@@ -518,8 +520,8 @@ marked@~0.3.9:
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
 
 moment@^2.10.2:
-  version "2.23.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.23.0.tgz#759ea491ac97d54bac5ad776996e2a58cc1bc225"
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
 
 prismjs@^1.11.0:
   version "1.15.0"
@@ -532,8 +534,8 @@ select@^1.1.2:
   resolved "https://registry.yarnpkg.com/select/-/select-1.1.2.tgz#0e7350acdec80b1108528786ec1d4418d11b396d"
 
 tiny-emitter@^2.0.0:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.0.2.tgz#82d27468aca5ade8e5fd1e6d22b57dd43ebdfb7c"
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
 
 webcomponents.js@^0.7.20:
   version "0.7.24"

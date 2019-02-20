@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="../../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+
+  <script type="module" src="../../../../@vaadin/vaadin-item/vaadin-item.js"></script>
+  <script type="module" src="../../vaadin-list-box.js"></script>
+  <style>
+    #list-box-tests {
+      font-family: sans-serif;
+      width: 400px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="list-box-tests">
+    <vaadin-list-box selected="2">
+      <vaadin-item>Item 0</vaadin-item>
+      <vaadin-item>Item 1</vaadin-item>
+      <vaadin-item>Item 2 (selected)</vaadin-item>
+      <vaadin-item disabled>Item 3 (disabled)</vaadin-item>
+      <vaadin-item>Item 4</vaadin-item>
+    </vaadin-list-box>
+  </div>
+</body>
