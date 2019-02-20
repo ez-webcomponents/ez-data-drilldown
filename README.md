@@ -40,33 +40,33 @@ or
           height="400px"
           width="800px"
           maxcharts=2
-          backgroundcolors= '[
-                        "rgba(255, 99, 132, 0.4)",
-                        "rgba(54, 162, 235, 0.4)",
-                        "rgba(255, 206, 86, 0.4)",
-                        "rgba(75, 192, 192, 0.4)",
-                        "rgba(153, 102, 255, 0.4)",
-                        "rgba(255, 159, 64, 0.4)"]'
-          bordercolors= '[
-                        "rgba(255, 99, 132, 1)",
-                        "rgba(54, 162, 235, 1)",
-                        "rgba(255, 206, 86, 1)",
-                        "rgba(75, 192, 192, 1)",
-                        "rgba(153, 102, 255, 1)",
-                        "rgba(255, 159, 64, 1)"]'
           localfilter='[{"field": "company", "action": "multiple", "value": "Spillman2,Nucore2"},
                         {"field": "startdate", "action": "gt", "value": "2015-12-01"}]'
           groupby='[
-                  {"field": "company", "aggregate": "sum(revenue)", "chart": "pie", 
-                      "contextmenu": [{"name": "Wikipedia", "target": "_blank", "url":"https://en.wikipedia.org/wiki/{company}"}, 
-                                      {"name": "USU",       "target": "modal", "url":"https://www.usu.edu/"}]},
-                  {"field": "date_trunc(month,startdate)", "aggregate": "boxplot(revenue)", "chart": "boxplot",
-                  "contextmenu": [{"name": "Wikipedia2", "target": "_self", "url":"https://en.wikipedia.org/wiki/{company}"}, 
-                                  {"name": "USU2",       "target": "modal", "url":"https://www.usu.edu/"}]},
-                  {"field": "division", "aggregate": "sum(revenue)", "chart": "pie"},
-                  {"field": "age", "aggregate": "sum(revenue)", "chart": "bar"},
-                  {"field": "gender", "aggregate": "sum(revenue)", "chart": "pie"},
-                  {"field": "eyeColor", "aggregate": "sum(revenue)", "chart": "bar"}
+                  {"field": "company", 
+                      "datasets": [
+                                {"label": "Revenue", "backgroundcolor": "#8e95cd", "bordercolor": "#8e95cd", "data": "sum(revenue)", "type": "bar"}
+                              ],
+                      "contextmenu": [{"name": "Wikipedia", "target": "modal", "url":"https://en.wikipedia.org/wiki/{company}"}, 
+                                      {"name": "USU",       "target": "_blank", "url":"https://www.usu.edu/"}]},
+                  {"field": "date_trunc(month,startdate)", 
+                      "datasets": [
+                                {"label": "Revenue", "backgroundcolor": "#8e95cd",  "bordercolor": "#8e95cd", "data": "sum(revenue)", "type": "pie"}
+                              ],
+                      "contextmenu": [{"name": "Wikipedia", "target": "modal", "url":"https://en.wikipedia.org/wiki/{company}"}, 
+                                      {"name": "USU2",      "target": "modal", "url":"https://www.usu.edu/"}]},
+                  {"field": "division", 
+                      "datasets": [
+                                {"label": "Revenue", "backgroundcolor": "#8e95cd", "bordercolor": "#8e95cd", "data": "sum(revenue)", "type": "bar"}
+                              ]},
+                  {"field": "age", 
+                      "datasets": [
+                                {"label": "Revenue", "backgroundcolor": "#8e95cd", "bordercolor": "#8e95cd", "data": "sum(revenue)", "type": "pie"}
+                              ]},
+                  {"field": "gender", 
+                      "datasets": [
+                                {"label": "Revenue", "backgroundcolor": "#8e95cd", "bordercolor": "#8e95cd", "data": "sum(revenue)", "type": "line"}
+                              ]}
                   ]'>  
         </ez-data-drilldown>
   </body>
