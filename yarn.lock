@@ -23,7 +23,7 @@
     "@lrnwebcomponents/hax-body-behaviors" "^0.0.31"
     "@polymer/polymer" "^3.0.5"
 
-"@polymer/font-roboto@3.0.2", "@polymer/font-roboto@^0.0.3", "@polymer/font-roboto@^3.0.0-pre.25", "@polymer/font-roboto@^3.0.1":
+"@polymer/font-roboto@3.0.2", "@polymer/font-roboto@^3.0.0-pre.25", "@polymer/font-roboto@^3.0.1":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@polymer/font-roboto/-/font-roboto-3.0.2.tgz#80cdaa7225db2359130dfb2c6d9a3be1820020c3"
 
@@ -416,7 +416,7 @@
   dependencies:
     "@vaadin/vaadin-development-mode-detector" "^2.0.0"
 
-"@webcomponents/shadycss@^1.2.0", "@webcomponents/shadycss@^1.5.2":
+"@webcomponents/shadycss@^1.2.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.9.0.tgz#8450465037370d4f5c32e801bb2554a7cf2f5037"
 
@@ -508,8 +508,8 @@ lit-html@1.0.0-rc.1, lit-html@^0.11.4, lit-html@^1.0.0:
   resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-1.0.0-rc.1.tgz#a83d45ed86fc7c5d4612f3092e83fd095baf1fc3"
 
 lodash-es@^4.17.11:
-  version "4.17.11"
-  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.11.tgz#145ab4a7ac5c5e52a3531fb4f310255a152b4be0"
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
 
 lodash@^4.17.11:
   version "4.17.11"
@@ -536,7 +536,3 @@ select@^1.1.2:
 tiny-emitter@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
-
-webcomponents.js@^0.7.20:
-  version "0.7.24"
-  resolved "https://registry.yarnpkg.com/webcomponents.js/-/webcomponents.js-0.7.24.tgz#2116fbfa1468ec416a7befdaa333e1d118f69c04"
